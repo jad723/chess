@@ -107,7 +107,10 @@ class GameState():
 
             # undo castling rights
             self.castle_rights_log.pop()
-            self.current_castling_right = self.castle_rights_log[-1]
+            self.current_castling_right.wks = self.castle_rights_log[-1].wks
+            self.current_castling_right.wqs = self.castle_rights_log[-1].wqs
+            self.current_castling_right.bks = self.castle_rights_log[-1].bks
+            self.current_castling_right.bqs = self.castle_rights_log[-1].bqs
  
             # undo castle move
             if move.is_castle_move:
@@ -156,10 +159,6 @@ class GameState():
     # Considering checks
     
     def get_valid_moves(self):
-
-        for log in self.castle_rights_log:
-            print(log.wks, log.wqs, log.bks, log.bqs, end=", ")
-        print()
 
         temp_en_passant_possible = self.en_passant_possible
         temp_castle_rights = Castle_Rights(self.current_castling_right.wks, self.current_castling_right.bks, 
